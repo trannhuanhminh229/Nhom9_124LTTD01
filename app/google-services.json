@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "468983568020",
+    "firebase_url": "https://app-ban-may-loc-nuoc-default-rtdb.firebaseio.com/",
+    "project_id": "app-ban-may-loc-nuoc",
+    "storage_bucket": "app-ban-may-loc-nuoc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468983568020:android:8e761cb4cba06d29fa0681",
+        "android_client_info": {
+          "package_name": "com.example.nhom09_124lttd01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1KKFGDgDltIJu1dA3QEjeMTiZrW3nEfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
