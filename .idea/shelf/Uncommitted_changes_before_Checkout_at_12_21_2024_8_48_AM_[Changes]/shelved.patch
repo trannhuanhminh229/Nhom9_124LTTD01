@@ -1,0 +1,192 @@
+Index: app/src/main/java/com/example/nhom09_124lttd01/ThongTinFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.nhom09_124lttd01;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\n/**\r\n * A simple {@link Fragment} subclass.\r\n * Use the {@link ThongTinFragment#newInstance} factory method to\r\n * create an instance of this fragment.\r\n */\r\npublic class ThongTinFragment extends Fragment {\r\n\r\n    // TODO: Rename parameter arguments, choose names that match\r\n    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\n    private static final String ARG_PARAM1 = \"param1\";\r\n    private static final String ARG_PARAM2 = \"param2\";\r\n\r\n    // TODO: Rename and change types of parameters\r\n    private String mParam1;\r\n    private String mParam2;\r\n\r\n    public ThongTinFragment() {\r\n        // Required empty public constructor\r\n    }\r\n\r\n    /**\r\n     * Use this factory method to create a new instance of\r\n     * this fragment using the provided parameters.\r\n     *\r\n     * @param param1 Parameter 1.\r\n     * @param param2 Parameter 2.\r\n     * @return A new instance of fragment ThongTinFragment.\r\n     */\r\n    // TODO: Rename and change types and number of parameters\r\n    public static ThongTinFragment newInstance(String param1, String param2) {\r\n        ThongTinFragment fragment = new ThongTinFragment();\r\n        Bundle args = new Bundle();\r\n        args.putString(ARG_PARAM1, param1);\r\n        args.putString(ARG_PARAM2, param2);\r\n        fragment.setArguments(args);\r\n        return fragment;\r\n    }\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        if (getArguments() != null) {\r\n            mParam1 = getArguments().getString(ARG_PARAM1);\r\n            mParam2 = getArguments().getString(ARG_PARAM2);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_thong_tin, container, false);\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/nhom09_124lttd01/ThongTinFragment.java b/app/src/main/java/com/example/nhom09_124lttd01/ThongTinFragment.java
+--- a/app/src/main/java/com/example/nhom09_124lttd01/ThongTinFragment.java	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/app/src/main/java/com/example/nhom09_124lttd01/ThongTinFragment.java	(date 1734745699348)
+@@ -2,11 +2,20 @@
+ 
+ import android.os.Bundle;
+ 
++import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
+ 
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.TextView;
++
++import com.google.firebase.database.DataSnapshot;
++import com.google.firebase.database.DatabaseError;
++import com.google.firebase.database.DatabaseReference;
++import com.google.firebase.database.FirebaseDatabase;
++import com.google.firebase.database.ValueEventListener;
+ 
+ /**
+  * A simple {@link Fragment} subclass.
+@@ -49,16 +58,49 @@
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++
+         if (getArguments() != null) {
+             mParam1 = getArguments().getString(ARG_PARAM1);
+             mParam2 = getArguments().getString(ARG_PARAM2);
++
+         }
+     }
++
+ 
+     @Override
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
+-        // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_thong_tin, container, false);
++        View view = inflater.inflate(R.layout.fragment_thong_tin, container, false);
++
++        FirebaseDatabase database = FirebaseDatabase.getInstance();
++
++        DatabaseReference myRef = database.getReference("groups");
++
++        Group group = new Group("Nguyễn Quốc Cường", "22115053122308", "124LTTD01");
++        myRef.push().setValue(group);
++        Group group2 = new Group("Trần Như Anh Minh", "22115053122229", "124LTTD01");
++        myRef.push().setValue(group2);
++
++        myRef.addValueEventListener(new ValueEventListener() {
++            @Override
++            public void onDataChange(@NonNull DataSnapshot snapshot) {
++                TextView textView = view.findViewById(R.id.textView);
++                textView.setText("");
++                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
++                    Group group1 = dataSnapshot.getValue(Group.class);
++                    if (group1 != null) {
++                        textView.append("Họ tên: " + group1.hoten + "\n");
++                        textView.append("Mã sinh viên: " + group1.masinhvien + "\n");
++                        textView.append("Lớp học phần : " + group1.lophocphan + "\n\n");
++                    }
++                }
++
++            }
++
++            @Override
++            public void onCancelled(@NonNull DatabaseError error) {
++            }
++        });
++        return view;
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/nhom09_124lttd01/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.nhom09_124lttd01;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\nimport androidx.fragment.app.FragmentStatePagerAdapter;\r\nimport androidx.viewpager.widget.ViewPager;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private ViewPager viewPager;\r\n    private BottomNavigationView bottomNavigationView;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_main);\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {\r\n            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);\r\n            return insets;\r\n        });\r\n\r\n        viewPager = findViewById(R.id.view_pager);\r\n        bottomNavigationView = findViewById(R.id.bottom_navigation);\r\n        ViewPagerAdapterTrangChu adapterTrangChu = new ViewPagerAdapterTrangChu(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);\r\n        viewPager.setAdapter(adapterTrangChu);\r\n\r\n        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {\r\n            @Override\r\n            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {\r\n\r\n            }\r\n\r\n            @Override\r\n            public void onPageSelected(int position) {\r\n                switch (position) {\r\n                    case 0:\r\n                        bottomNavigationView.getMenu().findItem(R.id.trangchu).setChecked(true);\r\n                        break;\r\n                    case 1:\r\n                        bottomNavigationView.getMenu().findItem(R.id.thongtin).setChecked(true);\r\n                        break;\r\n                    case 2:\r\n                        bottomNavigationView.getMenu().findItem(R.id.taikhoan).setChecked(true);\r\n                        break;\r\n                }\r\n\r\n\r\n            }\r\n\r\n            @Override\r\n            public void onPageScrollStateChanged(int state) {\r\n\r\n            }\r\n        });\r\n\r\n\r\n        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n\r\n                int itemId = item.getItemId();\r\n\r\n                if (itemId == R.id.trangchu) {\r\n                    viewPager.setCurrentItem(0, true);\r\n\r\n                } else if (itemId == R.id.thongtin) {\r\n                    viewPager.setCurrentItem(1, true);\r\n                } else if (itemId == R.id.taikhoan) {\r\n                    viewPager.setCurrentItem(2, true);\r\n                }\r\n                return true;\r\n            }\r\n        });\r\n\r\n\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/nhom09_124lttd01/MainActivity.java b/app/src/main/java/com/example/nhom09_124lttd01/MainActivity.java
+--- a/app/src/main/java/com/example/nhom09_124lttd01/MainActivity.java	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/app/src/main/java/com/example/nhom09_124lttd01/MainActivity.java	(date 1734743978292)
+@@ -82,6 +82,5 @@
+             }
+         });
+ 
+-
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_thong_tin.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ThongTinFragment\">\r\n\r\n    <!-- TODO: Update blank fragment layout -->\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"@string/hello_blank_fragment\" />\r\n\r\n</FrameLayout>
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_thong_tin.xml b/app/src/main/res/layout/fragment_thong_tin.xml
+--- a/app/src/main/res/layout/fragment_thong_tin.xml	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/app/src/main/res/layout/fragment_thong_tin.xml	(date 1734745561301)
+@@ -6,9 +6,10 @@
+     tools:context=".ThongTinFragment">
+ 
+     <!-- TODO: Update blank fragment layout -->
++
+     <TextView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:text="@string/hello_blank_fragment" />
+-
++        android:id="@+id/textView"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_centerInParent="true"/>
+ </FrameLayout>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"jbr-21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/.idea/misc.xml	(date 1734744248396)
+@@ -1,4 +1,3 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.nhom09_124lttd01\"\r\n    compileSdk = 34\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.nhom09_124lttd01\"\r\n        minSdk = 24\r\n        targetSdk = 34\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation(platform(\"com.google.firebase:firebase-bom:33.6.0\"))\r\n    implementation(platform(\"com.google.firebase:firebase-messaging\"))\r\n    implementation(\"com.google.firebase:firebase-database\")\r\n    implementation(\"com.google.firebase:firebase-auth\")\r\n\r\n    implementation(\"me.relex:circleindicator:2.1.6\")\r\n    implementation (\"com.github.bumptech.glide:glide:4.16.0\")\r\n    implementation (\"com.codesgood:justifiedtextview:1.1.0\")\r\n    implementation (\"androidx.recyclerview:recyclerview:1.2.1\")\r\n    implementation (\"androidx.recyclerview:recyclerview-selection:1.1.0\")\r\n    implementation (\"androidx.cardview:cardview:1.0.0\")\r\n\r\n\r\n    implementation(libs.appcompat)\r\n    implementation(libs.material)\r\n    implementation(libs.activity)\r\n    implementation(libs.constraintlayout)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.ext.junit)\r\n    androidTestImplementation(libs.espresso.core)\r\n}
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/app/build.gradle.kts	(date 1734745358532)
+@@ -1,5 +1,6 @@
+ plugins {
+     alias(libs.plugins.android.application)
++    alias(libs.plugins.google.gms.google.services)
+ }
+ 
+ android {
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"CHOOSE_PER_TEST\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"#GRADLE_LOCAL_JAVA_HOME\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveExternalAnnotations\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/.idea/gradle.xml	(date 1734743861847)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: gradle/libs.versions.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[versions]\r\nagp = \"8.7.3\"\r\njunit = \"4.13.2\"\r\njunitVersion = \"1.2.1\"\r\nespressoCore = \"3.6.1\"\r\nappcompat = \"1.7.0\"\r\nmaterial = \"1.12.0\"\r\nactivity = \"1.9.3\"\r\nconstraintlayout = \"2.2.0\"\r\n\r\n[libraries]\r\njunit = { group = \"junit\", name = \"junit\", version.ref = \"junit\" }\r\next-junit = { group = \"androidx.test.ext\", name = \"junit\", version.ref = \"junitVersion\" }\r\nespresso-core = { group = \"androidx.test.espresso\", name = \"espresso-core\", version.ref = \"espressoCore\" }\r\nappcompat = { group = \"androidx.appcompat\", name = \"appcompat\", version.ref = \"appcompat\" }\r\nmaterial = { group = \"com.google.android.material\", name = \"material\", version.ref = \"material\" }\r\nactivity = { group = \"androidx.activity\", name = \"activity\", version.ref = \"activity\" }\r\nconstraintlayout = { group = \"androidx.constraintlayout\", name = \"constraintlayout\", version.ref = \"constraintlayout\" }\r\n\r\n[plugins]\r\nandroid-application = { id = \"com.android.application\", version.ref = \"agp\" }\r\n\r\n
+===================================================================
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+--- a/gradle/libs.versions.toml	(revision 65eb0a79214d64bda332bd079cae5af8d214a9f3)
++++ b/gradle/libs.versions.toml	(date 1734745358415)
+@@ -7,6 +7,8 @@
+ material = "1.12.0"
+ activity = "1.9.3"
+ constraintlayout = "2.2.0"
++googleGmsGoogleServices = "4.4.2"
++firebaseDatabase = "21.0.0"
+ 
+ [libraries]
+ junit = { group = "junit", name = "junit", version.ref = "junit" }
+@@ -16,7 +18,9 @@
+ material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+ activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
++firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+ 
+ [plugins]
+ android-application = { id = "com.android.application", version.ref = "agp" }
++google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+ 
