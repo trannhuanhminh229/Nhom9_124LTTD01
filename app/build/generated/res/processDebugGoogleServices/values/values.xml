@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_database_url" translatable="false">https://app-ban-may-loc-nuoc-default-rtdb.firebaseio.com/</string>
+    <string name="gcm_defaultSenderId" translatable="false">468983568020</string>
+    <string name="google_api_key" translatable="false">AIzaSyB1KKFGDgDltIJu1dA3QEjeMTiZrW3nEfs</string>
+    <string name="google_app_id" translatable="false">1:468983568020:android:8e761cb4cba06d29fa0681</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB1KKFGDgDltIJu1dA3QEjeMTiZrW3nEfs</string>
+    <string name="google_storage_bucket" translatable="false">app-ban-may-loc-nuoc.firebasestorage.app</string>
+    <string name="project_id" translatable="false">app-ban-may-loc-nuoc</string>
+</resources>
