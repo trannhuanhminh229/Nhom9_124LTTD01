@@ -2,12 +2,15 @@ package com.example.nhom09_124lttd01;
 
 import android.os.Bundle;
 
+
 import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,6 +73,7 @@ public class ThongTinFragment extends Fragment {
 
 
 
+
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("groups");
 
         Group group1 = new Group("Nguyễn Quốc Cường", "22115053122308", "124LTTD01");
@@ -100,6 +105,11 @@ public class ThongTinFragment extends Fragment {
         });
 
         return view;
+    }
+
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_thong_tin, container, false);
     }
 
 }
