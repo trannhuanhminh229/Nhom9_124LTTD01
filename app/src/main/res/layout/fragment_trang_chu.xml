@@ -1,14 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TrangChuFragment">
+    android:background="@color/back_ground_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".TrangChuFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_qc"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription=" "
 
-</FrameLayout>
+            />
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/circleindicator_center"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            app:ci_drawable="@drawable/bg_indicatior"/>
+
+        <LinearLayout
+            android:id="@+id/lnheader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:hint="Tìm kiếm"
+                android:background="@drawable/edit_text_rounded_coner"
+                android:layout_margin="10dp"
+                android:drawableEnd="@drawable/icon_lookup"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/btngiohang"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_giohang_m"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnspdv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:id="@+id/btnsanpham"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/corner_btn_svdv"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_btn_sanpham_m"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sản phẩm"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/btndichvu"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/corner_btn_svdv"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_btn_dichvu"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dịch vụ"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnsanphamnb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:layout_gravity="center"
+
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_store"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sẩn phẩm nổi bật"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:paddingStart="10dp"
+                    android:layout_gravity="center"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:paddingStart="100dp"
+                android:paddingEnd="10dp"
+                android:layout_gravity="center"
+                android:gravity="end"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem tất cả"
+                    android:layout_gravity="center"
+                    android:textSize="14dp"
+                    android:textColor="@color/bottom_nav_default_color"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_next_m"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_sanphamcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</LinearLayout>
