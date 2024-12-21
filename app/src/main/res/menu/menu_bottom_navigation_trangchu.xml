@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/trangchu"
+        android:title="Trang Chu"
+
+
+        />
+    <item
+        android:id="@+id/thongtin"
+        android:title="Thông tin"
+        />
+    <item
+        android:id="@+id/taikhoan"
+        android:title="Tài khoản"
+        />
+</menu>
