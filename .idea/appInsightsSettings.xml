@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.nhom09_124lttd01" />
+                  <option name="mobileSdkAppId" value="1:468983568020:android:8e761cb4cba06d29fa0681" />
+                  <option name="projectId" value="app-ban-may-loc-nuoc" />
+                  <option name="projectNumber" value="468983568020" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
